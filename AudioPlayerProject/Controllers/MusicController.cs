@@ -1,4 +1,5 @@
-﻿using AudioPlayerProject.Models.Music;
+﻿using AudioPlayerProject.Data;
+using AudioPlayerProject.Models.Music;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,9 +13,11 @@ namespace AudioPlayerProject.Controllers
     public class MusicController : Controller
     {
         private readonly IHostingEnvironment hostingEnvironment;
-        public MusicController(IHostingEnvironment environment)
+        private MusicContext context;
+        public MusicController(IHostingEnvironment environment, MusicContext context)
         {
             hostingEnvironment = environment;
+            this.context = context;
         }
 
         public IActionResult Index()
@@ -32,6 +35,18 @@ namespace AudioPlayerProject.Controllers
                 var filePath = Path.Combine(uploads, fileName);
 
                 music.MusicFile.CopyTo(new FileStream(filePath, FileMode.Create));
+                Console.WriteLine("Adding to db");
+                try
+                {
+                    context.Musics.Add(music);
+                    context.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
+                Console.WriteLine("Added to db");
+
             }
             return View();
         }
