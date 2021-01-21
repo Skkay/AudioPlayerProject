@@ -10,11 +10,12 @@ namespace AudioPlayerProject.Models.Music
 {
     public class Music
     {
-        [Key]
-        public string MusicTitle { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Artist { get; set; }
+        public string Path { get; set; }
 
         [NotMapped]
-        public IFormFile MusicFile { get; set; }
-        public string MusicPath { get; set; }
+        public IFormFile File { get; set; }
     }
 }

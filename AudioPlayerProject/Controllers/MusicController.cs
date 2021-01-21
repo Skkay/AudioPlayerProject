@@ -28,16 +28,20 @@ namespace AudioPlayerProject.Controllers
         [HttpPost]
         public IActionResult Index(Music music)
         {
-            if (music.MusicFile != null)
+            if (music.File != null)
             {
-                var fileName = Path.GetFileName(music.MusicFile.FileName);
-                var uploads = Path.Combine(hostingEnvironment.WebRootPath, "uploads");
-                var filePath = Path.Combine(uploads, fileName);
-
-                music.MusicFile.CopyTo(new FileStream(filePath, FileMode.Create));
-                Console.WriteLine("Adding to db");
                 try
                 {
+                    string uploadsFolderName = "uploads";
+                    string uploadsFolderPath = Path.Combine(hostingEnvironment.WebRootPath, uploadsFolderName);
+
+                    string extension = Path.GetExtension(music.File.FileName);
+                    string fileName = music.Title + (string.IsNullOrWhiteSpace(music.Artist) ? "" : " - " + music.Artist) + extension;
+                    string filePath = Path.Combine(uploadsFolderPath, fileName);
+
+                    music.Path = "\\" + uploadsFolderName + "\\" + fileName;
+                    music.File.CopyTo(new FileStream(filePath, FileMode.Create));
+                    
                     context.Musics.Add(music);
                     context.SaveChanges();
                 }
@@ -45,8 +49,7 @@ namespace AudioPlayerProject.Controllers
                 {
                     Console.WriteLine(e.ToString());
                 }
-                Console.WriteLine("Added to db");
-
+                
             }
             return View();
         }

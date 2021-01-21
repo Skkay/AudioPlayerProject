@@ -5,8 +5,9 @@
 }
 @model Music
 <form asp-action="Index" enctype="multipart/form-data">
-    <input asp-for="MusicTitle" />
-    <input asp-for="MusicFile" />
+    <input asp-for="Title" required />
+    <input asp-for="Artist" />
+    <input asp-for="File" required />
 
     <input type="submit" />
 </form>
