@@ -1,0 +1,22 @@
+﻿@using AudioPlayerProject.Models.Music;
+
+@{
+    ViewData["Title"] = "Play";
+    Music music = ViewBag.Music;
+}
+
+@section Scripts {
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <script>
+        var wavesurfer = WaveSurfer.create({
+            container: '#waveform'
+        });
+
+        wavesurfer.load("@( "/" + ViewBag.BaseUploadsPath + "/" + music.Path )")
+    </script>
+}
+<h3>@music.Title</h3>
+<div id="waveform"></div>
+
+<button onclick="wavesurfer.play();">Play</button>
+<button onclick="wavesurfer.pause();">Pause</button>

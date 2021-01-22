@@ -14,10 +14,16 @@ namespace AudioPlayerProject.Controllers
     {
         private readonly IHostingEnvironment hostingEnvironment;
         private MusicContext context;
+        private string uploadsFolderName;
+        private string uploadsFolderPath;
+
         public MusicController(IHostingEnvironment environment, MusicContext context)
         {
             hostingEnvironment = environment;
             this.context = context;
+
+            this.uploadsFolderName = "uploads";
+            this.uploadsFolderPath = Path.Combine(hostingEnvironment.WebRootPath, this.uploadsFolderName);
         }
 
         public IActionResult Index()
@@ -34,14 +40,12 @@ namespace AudioPlayerProject.Controllers
             {
                 try
                 {
-                    string uploadsFolderName = "uploads";
-                    string uploadsFolderPath = Path.Combine(hostingEnvironment.WebRootPath, uploadsFolderName);
-
                     string extension = Path.GetExtension(music.File.FileName);
                     string fileName = music.Title + (string.IsNullOrWhiteSpace(music.Artist) ? "" : " - " + music.Artist) + extension;
-                    string filePath = Path.Combine(uploadsFolderPath, fileName);
+                    
+                    string filePath = Path.Combine(this.uploadsFolderPath, fileName);
 
-                    music.Path = "\\" + uploadsFolderName + "\\" + fileName;
+                    music.Path = fileName;
                     music.File.CopyTo(new FileStream(filePath, FileMode.Create));
                     
                     context.Musics.Add(music);
@@ -57,6 +61,14 @@ namespace AudioPlayerProject.Controllers
                 
             }
             return RedirectToAction();
+        }
+
+        public IActionResult Play(int id)
+        {
+            Music music = context.Musics.Find(id);
+            ViewBag.Music = music;
+            ViewBag.BaseUploadsPath = this.uploadsFolderName;
+            return View();
         }
     }
 }
