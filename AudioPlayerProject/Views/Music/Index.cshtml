@@ -3,6 +3,20 @@
 @{
     ViewData["Title"] = "Music Page";
 }
+
+@if (ViewData["UploadMusicResult"] == "Success")
+{
+    <div class="alert alert-success" role="alert">
+        La musique a été ajoutée avec succès !
+    </div>
+}
+else if (ViewData["UploadMusicResult"] == "Failure")
+{
+    <div class="alert alert-danger" role="alert">
+        Une erreur s'est produit lors de l'ajout de la musique
+    </div>
+}
+
 @model Music
 <form asp-action="Index" enctype="multipart/form-data">
     <input asp-for="Title" required />
