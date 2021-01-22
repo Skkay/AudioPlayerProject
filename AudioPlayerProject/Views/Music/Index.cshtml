@@ -19,12 +19,25 @@ else if (ViewData["UploadMusicResult"] == "Failure")
 
 @model Music
 <form asp-action="Index" enctype="multipart/form-data">
-    <input asp-for="Title" required />
-    <input asp-for="Artist" />
-    <input asp-for="File" required />
-
-    <input type="submit" />
+    <div class="form-row">
+        <div class="col-md-3 my-1">
+            <input asp-for="Title" type="text" class="form-control" placeholder="Titre" required />
+        </div>
+        <div class="col-md-3 my-1">
+            <input asp-for="Artist" type="text" class="form-control" placeholder="Artiste" />
+        </div>
+        <div class="col-md-5 my-1 custom-file">
+            <label class="custom-file-label" for="input">Sélectionner une musique</label>
+            <input asp-for="File" type="file" class="custom-file-input" id="file-input" required />
+        </div>
+        <div class="col-md-1 my-1">
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </div>
+    </div>
 </form>
+ 
+
+<hr class="my-4" />
 
 @{ List<Music> musics = ViewBag.MusicsList; }
 <table class="table table-sm table-hover table-striped">
