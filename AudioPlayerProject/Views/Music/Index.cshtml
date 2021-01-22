@@ -25,3 +25,29 @@ else if (ViewData["UploadMusicResult"] == "Failure")
 
     <input type="submit" />
 </form>
+
+@{ List<Music> musics = ViewBag.MusicsList; }
+<table class="table table-sm table-hover table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Titre</th>
+            <th scope="col">Artiste</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+        </tr>
+        @foreach (Music music in musics)
+        {
+            <tr>
+                <td>@music.Id</td>
+                <td>@music.Title</td>
+                <td>@music.Artist</td>
+            </tr>
+        }
+    </tbody>
+</table>

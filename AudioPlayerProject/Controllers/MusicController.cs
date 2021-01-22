@@ -22,7 +22,8 @@ namespace AudioPlayerProject.Controllers
 
         public IActionResult Index()
         {
-            return View(new Music());
+            ViewBag.MusicsList = context.Musics.ToList();
+            return View();
         }
 
         [HttpPost]
@@ -55,7 +56,7 @@ namespace AudioPlayerProject.Controllers
                 }
                 
             }
-            return View();
+            return RedirectToAction();
         }
     }
 }
