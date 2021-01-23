@@ -26,6 +26,7 @@ namespace AudioPlayerProject
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MusicContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AudioPlayerProjectContextConnection")));
+            services.AddDbContext<PlaylistContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AudioPlayerProjectContextConnection")));
 
             services.AddControllersWithViews();
             services.AddRazorPages();

@@ -17,5 +17,7 @@ namespace AudioPlayerProject.Models
 
         [NotMapped]
         public IFormFile File { get; set; }
+
+        public ICollection<PlaylistMusic> PlaylistMusics { get; set; }
     }
 }
