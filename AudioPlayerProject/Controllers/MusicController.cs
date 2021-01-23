@@ -1,5 +1,5 @@
 ﻿using AudioPlayerProject.Data;
-using AudioPlayerProject.Models.Music;
+using AudioPlayerProject.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;

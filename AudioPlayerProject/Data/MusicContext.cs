@@ -1,4 +1,4 @@
-﻿using AudioPlayerProject.Models.Music;
+﻿using AudioPlayerProject.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
