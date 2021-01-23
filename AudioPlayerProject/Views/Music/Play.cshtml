@@ -5,6 +5,12 @@
     ViewData["Title"] = music.Title + (music.Artist == null ? "" : "- " + music.Artist);
 }
 
+<h3>@music.Title @(music.Artist == null ? "" : "- " + music.Artist)</h3>
+<div id="waveform"></div>
+
+<button onclick="wavesurfer.play();">Play</button>
+<button onclick="wavesurfer.pause();">Pause</button>
+
 @section Scripts {
     <script src="https://unpkg.com/wavesurfer.js"></script>
     <script>
@@ -15,8 +21,3 @@
         wavesurfer.load("@( "/" + ViewBag.BaseUploadsPath + "/" + music.Path )")
     </script>
 }
-<h3>@music.Title @(music.Artist == null ? "" : "- " + music.Artist)</h3>
-<div id="waveform"></div>
-
-<button onclick="wavesurfer.play();">Play</button>
-<button onclick="wavesurfer.pause();">Pause</button>
