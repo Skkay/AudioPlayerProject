@@ -27,15 +27,14 @@ else if (ViewData["UploadMusicResult"] == "Failure")
             <input asp-for="Artist" type="text" class="form-control" placeholder="Artiste" />
         </div>
         <div class="col-md-5 my-1 custom-file">
-            <label class="custom-file-label" for="input">Sélectionner une musique</label>
             <input asp-for="File" type="file" class="custom-file-input" id="file-input" accept=".mp3" required />
+            <label class="custom-file-label" for="input">Sélectionner une musique</label>
         </div>
         <div class="col-md-1 my-1">
             <button type="submit" class="btn btn-primary">Envoyer</button>
         </div>
     </div>
 </form>
- 
 
 <hr class="my-4" />
 
@@ -61,3 +60,13 @@ else if (ViewData["UploadMusicResult"] == "Failure")
         }
     </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        $('#file-input').on('change', function () {
+            console.log("change");
+            var fileName = document.getElementById("file-input").files[0].name; 
+            $(this).next('.custom-file-label').html(fileName);
+        })
+    </script>
+}
