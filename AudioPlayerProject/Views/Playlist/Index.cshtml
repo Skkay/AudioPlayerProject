@@ -31,3 +31,22 @@ else if (TempData["CreatePlaylistResult"] == "Failure")
 </form>
 
 <hr class="my-4" />
+
+@{ List<Playlist> playlists = ViewBag.PlaylistList; }
+<table class="table table-sm table-hover table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Playlist playlist in playlists)
+        {
+            <tr>
+                <td>@playlist.Id</td>
+                <td>@playlist.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>

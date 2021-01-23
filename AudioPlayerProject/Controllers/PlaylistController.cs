@@ -20,6 +20,7 @@ namespace AudioPlayerProject.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.PlaylistList = context.Playlists.ToList();
             return View();
         }
 
