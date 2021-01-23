@@ -1,4 +1,33 @@
-﻿@{
+﻿@using AudioPlayerProject.Models;
+
+@{
     ViewData["Title"] = "Playlist";
 }
 <h3>Playlist</h3>
+
+@if (TempData["CreatePlaylistResult"] == "Success")
+{
+    <div class="alert alert-success" role="alert">
+        La musique a été créée avec succès !
+    </div>
+}
+else if (TempData["CreatePlaylistResult"] == "Failure")
+{
+    <div class="alert alert-danger" role="alert">
+        Une erreur s'est produit lors de la création de la playlist
+    </div>
+}
+
+@model Playlist
+<form asp-action="Index" enctype="multipart/form-data">
+    <div class="form-row">
+        <div class="col-md-11 my-1">
+            <input asp-for="Name" type="text" class="form-control" placeholder="Titre" required />
+        </div>
+        <div class="col-md-1 my-1">
+            <button type="submit" class="btn btn-primary">Créer</button>
+        </div>
+    </div>
+</form>
+
+<hr class="my-4" />
