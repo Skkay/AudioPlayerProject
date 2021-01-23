@@ -8,8 +8,10 @@
 <h3>@music.Title @(music.Artist == null ? "" : "- " + music.Artist)</h3>
 <div id="waveform"></div>
 
-<button onclick="wavesurfer.play();">Play</button>
-<button onclick="wavesurfer.pause();">Pause</button>
+<div class="d-flex justify-content-center">
+    <button class="btn btn-primary mx-1" onclick="wavesurfer.playPause();">Play / Pause</button>
+    <button class="btn btn-primary mx-1" onclick="wavesurfer.toggleMute();">Toggle Mute</button>
+</div>
 
 @section Scripts {
     <script src="https://unpkg.com/wavesurfer.js"></script>
