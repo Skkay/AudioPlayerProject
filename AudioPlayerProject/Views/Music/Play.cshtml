@@ -1,8 +1,8 @@
 ﻿@using AudioPlayerProject.Models.Music;
 
 @{
-    ViewData["Title"] = "Play";
     Music music = ViewBag.Music;
+    ViewData["Title"] = music.Title + (music.Artist == null ? "" : "- " + music.Artist);
 }
 
 @section Scripts {
@@ -15,7 +15,7 @@
         wavesurfer.load("@( "/" + ViewBag.BaseUploadsPath + "/" + music.Path )")
     </script>
 }
-<h3>@music.Title</h3>
+<h3>@music.Title @(music.Artist == null ? "" : "- " + music.Artist)</h3>
 <div id="waveform"></div>
 
 <button onclick="wavesurfer.play();">Play</button>
