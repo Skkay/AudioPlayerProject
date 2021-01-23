@@ -10,7 +10,7 @@ namespace AudioPlayerProject.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public int AudioPlayerProjectUserId { get; set; }
+        public string AudioPlayerProjectUserId { get; set; }
 
         public ICollection<PlaylistMusic> PlaylistMusics { get; set; }
     }
