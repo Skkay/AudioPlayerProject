@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AudioPlayerProject.Controllers
@@ -13,14 +14,16 @@ namespace AudioPlayerProject.Controllers
     public class MusicController : Controller
     {
         private readonly IHostingEnvironment hostingEnvironment;
-        private MusicContext context;
+        private MusicContext contextMusic;
+        private PlaylistContext contextPlaylist;
         private string uploadsFolderName;
         private string uploadsFolderPath;
 
-        public MusicController(IHostingEnvironment environment, MusicContext context)
+        public MusicController(IHostingEnvironment environment, MusicContext contextMusic, PlaylistContext contextPlaylist)
         {
             hostingEnvironment = environment;
-            this.context = context;
+            this.contextMusic = contextMusic;
+            this.contextPlaylist = contextPlaylist;
 
             this.uploadsFolderName = "uploads";
             this.uploadsFolderPath = Path.Combine(hostingEnvironment.WebRootPath, this.uploadsFolderName);
@@ -28,7 +31,7 @@ namespace AudioPlayerProject.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.MusicsList = context.Musics.ToList();
+            ViewBag.MusicsList = contextMusic.Musics.ToList();
             return View();
         }
 
@@ -48,8 +51,8 @@ namespace AudioPlayerProject.Controllers
                     music.Path = fileName;
                     music.File.CopyTo(new FileStream(filePath, FileMode.Create));
                     
-                    context.Musics.Add(music);
-                    context.SaveChanges();
+                    contextMusic.Musics.Add(music);
+                    contextMusic.SaveChanges();
 
                     ViewData["UploadMusicResult"] = "Success";
                     ModelState.Clear();
@@ -65,10 +68,26 @@ namespace AudioPlayerProject.Controllers
 
         public IActionResult Play(int id)
         {
-            Music music = context.Musics.Find(id);
+            Music music = contextMusic.Musics.Find(id);
             ViewBag.Music = music;
             ViewBag.BaseUploadsPath = this.uploadsFolderName;
             return View();
+        }
+
+        public IActionResult AddToPlaylist(int playlist_id, int music_id)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get actual user id
+            IEnumerable<Playlist> usersPlaylist = contextPlaylist.Playlists.ToList().Where(p => (p.AudioPlayerProjectUserId == userId) && (p.Id == playlist_id));
+
+            if (usersPlaylist.Any()) // If user owns this playlist
+            {
+                PlaylistMusic pm = new PlaylistMusic() { MusicId = music_id, PlaylistId = playlist_id };
+
+                contextPlaylist.PlaylistMusics.Add(pm);
+                contextPlaylist.SaveChanges();
+            }
+            
+            return RedirectToAction("Index");
         }
     }
 }
