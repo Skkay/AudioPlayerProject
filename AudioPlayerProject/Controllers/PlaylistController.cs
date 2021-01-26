@@ -20,7 +20,8 @@ namespace AudioPlayerProject.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.PlaylistList = context.Playlists.ToList();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewBag.PlaylistList = context.Playlists.Where(p => p.AudioPlayerProjectUserId == userId).ToList();
             return View();
         }
 
