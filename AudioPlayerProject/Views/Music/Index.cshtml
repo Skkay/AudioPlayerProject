@@ -38,13 +38,15 @@ else if (ViewData["UploadMusicResult"] == "Failure")
 
 <hr class="my-4" />
 
-@{ List<Music> musics = ViewBag.MusicsList; }
+@{ List<Music> musics = ViewBag.MusicList; }
+@{ List<Playlist> playlists= ViewBag.PlaylistList; }
 <table class="table table-sm table-hover table-striped">
     <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Titre</th>
             <th scope="col">Artiste</th>
+            <th scope="col">#</th>
             <th scope="col">#</th>
         </tr>
     </thead>
@@ -56,6 +58,21 @@ else if (ViewData["UploadMusicResult"] == "Failure")
             <td>@music.Title</td>
             <td>@music.Artist</td>
             <td><a asp-area="" asp-controller="Music" asp-action="Play" asp-route-id="@music.Id">Play</a></td>
+            <td>
+                <div class="dropdown">
+                    <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="addToPlaylist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Ajouter à...
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="addToPlaylist">
+                        <h6 class="dropdown-header">Playlist</h6>
+                        @foreach (Playlist playlist in playlists)
+                        {
+                            <a class="dropdown-item" asp-area="" asp-controller="Music" asp-action="AddToPlaylist" asp-route-playlist_id="@playlist.Id" asp-route-music_id="@music.Id">@playlist.Name</a>
+                        }
+                    </div>
+                </div>
+            </td>
         </tr>
         }
     </tbody>
@@ -65,7 +82,7 @@ else if (ViewData["UploadMusicResult"] == "Failure")
     <script>
         $('#file-input').on('change', function () {
             console.log("change");
-            var fileName = document.getElementById("file-input").files[0].name; 
+            var fileName = document.getElementById("file-input").files[0].name;
             $(this).next('.custom-file-label').html(fileName);
         })
     </script>

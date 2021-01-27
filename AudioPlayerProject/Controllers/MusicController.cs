@@ -31,7 +31,9 @@ namespace AudioPlayerProject.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.MusicsList = contextMusic.Musics.ToList();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get actual user id
+            ViewBag.MusicList = contextMusic.Musics.ToList();
+            ViewBag.PlaylistList = contextPlaylist.Playlists.ToList().Where(p => p.AudioPlayerProjectUserId == userId).ToList();
             return View();
         }
 
