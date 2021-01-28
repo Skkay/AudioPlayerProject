@@ -1,0 +1,21 @@
+﻿@using AudioPlayerProject.Models;
+
+@{
+    ViewData["Title"] = "Supprimer une playlist";
+}
+
+@{ Playlist playlist = ViewBag.Playlist; }
+<h4>Vous être sur le point de supprimer une playlist.</h4>
+<p>Merci d'écrire <b>@playlist.Name</b> pour confirmer.</p>
+
+<form asp-action="Delete" method="POST" enctype="multipart/form-data">
+    <div class="form-row">
+        <div class="col-md-11 my-1">
+            <input type="text" class="form-control" name="confirm_playlist_name" required />
+            <input type="text" class="sr-only form-control" name="playlist_id" value="@playlist.Id" required />
+        </div>
+        <div class="col-md-1 my-1">
+            <button type="submit" class="btn btn-primary">Supprimer</button>
+        </div>
+    </div>
+</form>

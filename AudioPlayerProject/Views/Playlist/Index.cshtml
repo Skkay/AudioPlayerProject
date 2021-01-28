@@ -58,7 +58,7 @@ else if (TempData["CreatePlaylistResult"] == "Failure")
 
                         <div class="dropdown-menu" aria-labelledby="dropdown">
                             <a class="dropdown-item" asp-area="" asp-controller="Playlist" asp-action="Update" asp-route-id="@playlist.Id">Renommer la playlist</a>
-                            <a class="dropdown-item" href="#">Supprimer la playlist</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Playlist" asp-action="Delete" asp-route-id="@playlist.Id">Supprimer la playlist</a>
                         </div>
                     </div>
                 </td>

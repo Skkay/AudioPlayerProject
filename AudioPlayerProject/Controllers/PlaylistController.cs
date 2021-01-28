@@ -63,5 +63,26 @@ namespace AudioPlayerProject.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public IActionResult Delete(int id)
+        {
+            Playlist playlist = context.Playlists.Find(id);
+            ViewBag.Playlist = playlist;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int playlist_id, string confirm_playlist_name)
+        {
+            Playlist playlist = context.Playlists.Find(playlist_id);
+
+            if (confirm_playlist_name == playlist.Name)
+            {
+                context.Playlists.Remove(playlist);
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }
