@@ -1,0 +1,18 @@
+﻿@using AudioPlayerProject.Models;
+
+@{
+    ViewData["Title"] = "Modifier une playlist";
+}
+
+@{ Playlist playlist = ViewBag.Playlist; }
+<form asp-action="Update" method="POST" enctype="multipart/form-data">
+    <div class="form-row">
+        <div class="col-md-11 my-1">
+            <input type="text" class="form-control" placeholder="@playlist.Name" name="new_playlist_name" required />
+            <input type="text" class="sr-only form-control" name="playlist_id" value="@playlist.Id" required />
+        </div>
+        <div class="col-md-1 my-1">
+            <button type="submit" class="btn btn-primary">Modifier</button>
+        </div>
+    </div>
+</form>

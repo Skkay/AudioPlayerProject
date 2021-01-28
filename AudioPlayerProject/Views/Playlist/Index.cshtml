@@ -38,6 +38,7 @@ else if (TempData["CreatePlaylistResult"] == "Failure")
         <tr>
             <th scope="col">#</th>
             <th scope="col">Nom</th>
+            <th scope="col">#</th>
         </tr>
     </thead>
     <tbody>
@@ -46,6 +47,21 @@ else if (TempData["CreatePlaylistResult"] == "Failure")
             <tr>
                 <td>@playlist.Id</td>
                 <td>@playlist.Name</td>
+                <td>
+                    <div class="btn-group">
+                        <a class="btn btn-secondary btn-sm" href="#" role="button">
+                            Button
+                        </a>
+                        <a class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdown">
+                            <a class="dropdown-item" asp-area="" asp-controller="Playlist" asp-action="Update" asp-route-id="@playlist.Id">Renommer la playlist</a>
+                            <a class="dropdown-item" href="#">Supprimer la playlist</a>
+                        </div>
+                    </div>
+                </td>
             </tr>
         }
     </tbody>

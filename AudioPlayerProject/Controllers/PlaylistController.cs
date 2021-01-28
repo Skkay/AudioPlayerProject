@@ -44,5 +44,24 @@ namespace AudioPlayerProject.Controllers
             }
             return RedirectToAction();
         }
+
+        public IActionResult Update(int id)
+        {
+            Playlist playlist = context.Playlists.Find(id);
+            ViewBag.Playlist = playlist;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Update(int playlist_id, string new_playlist_name)
+        {
+            Playlist playlist = context.Playlists.Find(playlist_id);
+            playlist.Name = new_playlist_name;
+
+            context.Playlists.Update(playlist);
+            context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
     }
 }
