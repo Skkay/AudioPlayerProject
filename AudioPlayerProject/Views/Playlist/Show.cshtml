@@ -16,17 +16,19 @@
             <th scope="col">Titre</th>
             <th scope="col">Artiste</th>
             <th scope="col">#</th>
+            <th scope="col">#</th>
         </tr>
     </thead>
     <tbody>
         @foreach (Music music in musics)
         {
-            <tr>
-                <td>@music.Id</td>
-                <td>@music.Title</td>
-                <td>@music.Artist</td>
-                <td><a asp-area="" asp-controller="Music" asp-action="Play" asp-route-id="@music.Id">Play</a></td>
-            </tr>
+        <tr>
+            <td>@music.Id</td>
+            <td>@music.Title</td>
+            <td>@music.Artist</td>
+            <td><a asp-area="" asp-controller="Music" asp-action="Play" asp-route-id="@music.Id">Play</a></td>
+            <td><a asp-area="" asp-controller="Playlist" asp-action="RemoveFromPlaylist" asp-route-playlist_id="@playlist.Id" asp-route-music_id="@music.Id">Retirer</a></td>
+        </tr>
         }
     </tbody>
 </table>

@@ -95,5 +95,20 @@ namespace AudioPlayerProject.Controllers
             ViewBag.Playlist = playlist;
             return View();
         }
+
+        public IActionResult RemoveFromPlaylist(int playlist_id, int music_id)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get actual user id
+            IEnumerable<Playlist> usersPlaylist = context.Playlists.ToList().Where(p => (p.AudioPlayerProjectUserId == userId) && (p.Id == playlist_id));
+
+            if (usersPlaylist.Any()) // If user owns this playlist
+            {
+                PlaylistMusic pm = context.PlaylistMusics.Where(pm => (pm.PlaylistId == playlist_id && (pm.MusicId == music_id))).First();
+                context.PlaylistMusics.Remove(pm);
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("Show", new { id = playlist_id });
+        }
     }
 }
