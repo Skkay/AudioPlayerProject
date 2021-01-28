@@ -1,0 +1,30 @@
+﻿@using AudioPlayerProject.Models;
+
+@{
+    List<Music> musics = ViewBag.Musics;
+    Playlist playlist = ViewBag.Playlist;
+    ViewData["Title"] = @playlist.Name;
+}
+<h3>@playlist.Name</h3>
+
+<hr class="my-4" />
+
+<table class="table table-sm table-hover table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Titre</th>
+            <th scope="col">Artiste</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Music music in musics)
+        {
+            <tr>
+                <td>@music.Id</td>
+                <td>@music.Title</td>
+                <td>@music.Artist</td>
+            </tr>
+        }
+    </tbody>
+</table>

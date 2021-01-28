@@ -84,5 +84,16 @@ namespace AudioPlayerProject.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public IActionResult Show(int id)
+        {
+            Playlist playlist = context.Playlists.Find(id);
+            List<int> musicIds = context.PlaylistMusics.Where(p => p.PlaylistId == id).Select(p => p.Id).ToList();
+            List<Music> musics = context.Musics.Where(m => musicIds.Contains(m.Id)).ToList();
+
+            ViewBag.Musics = musics;
+            ViewBag.Playlist = playlist;
+            return View();
+        }
     }
 }
