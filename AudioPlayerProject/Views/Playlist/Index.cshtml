@@ -46,7 +46,7 @@ else if (TempData["CreatePlaylistResult"] == "Failure")
         {
             <tr>
                 <td>@playlist.Id</td>
-                <td>@playlist.Name</td>
+                <td><a asp-area="" asp-controller="Playlist" asp-action="Show" asp-route-id="@playlist.Id">@playlist.Name</a></td>
                 <td>
                     <div class="btn-group">
                         <a class="btn btn-secondary btn-sm" href="#" role="button">
