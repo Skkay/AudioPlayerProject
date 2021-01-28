@@ -21,5 +21,9 @@
         });
 
         wavesurfer.load("@( "/" + ViewBag.BaseUploadsPath + "/" + music.Path )")
+
+        wavesurfer.on('ready', function () {
+            wavesurfer.play();
+        })
     </script>
 }
