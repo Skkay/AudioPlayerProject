@@ -12,9 +12,11 @@ namespace AudioPlayerProject.Controllers
     public class PlaylistController : Controller
     {
         private PlaylistContext context;
+        private string uploadsFolderName;
 
         public PlaylistController(PlaylistContext context)
         {
+            this.uploadsFolderName = "uploads";
             this.context = context;
         }
 
@@ -114,7 +116,12 @@ namespace AudioPlayerProject.Controllers
         public IActionResult Play(int id)
         {
             Playlist playlist = context.Playlists.Find(id);
+            List<int> musicIds = context.PlaylistMusics.Where(p => p.PlaylistId == id).Select(p => p.MusicId).ToList();
+            List<Music> musics = context.Musics.Where(m => musicIds.Contains(m.Id)).ToList();
+
             ViewBag.Playlist = playlist;
+            ViewBag.Musics = musics;
+            ViewBag.BaseUploadsPath = this.uploadsFolderName;
             return View();
         }
     }

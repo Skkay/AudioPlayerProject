@@ -2,6 +2,7 @@
 
 @{
     Playlist playlist = ViewBag.Playlist;
+    List<Music> musics = ViewBag.Musics;
     ViewData["Title"] = playlist.Name;
 }
 
@@ -11,6 +12,13 @@
 <div class="d-flex justify-content-center">
     <button class="btn btn-primary mx-1" onclick="wavesurfer.playPause();">Play / Pause</button>
     <button class="btn btn-primary mx-1" onclick="wavesurfer.toggleMute();">Toggle Mute</button>
+</div>
+
+<div class="list-group my-4" id="playlist">
+    @foreach (Music music in musics)
+    {
+        <a href="@( "/" + ViewBag.BaseUploadsPath + "/" + music.Path )" class="list-group-item">@music.Title</a>
+    }
 </div>
 
 @section Scripts {
