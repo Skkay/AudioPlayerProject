@@ -110,5 +110,12 @@ namespace AudioPlayerProject.Controllers
 
             return RedirectToAction("Show", new { id = playlist_id });
         }
+
+        public IActionResult Play(int id)
+        {
+            Playlist playlist = context.Playlists.Find(id);
+            ViewBag.Playlist = playlist;
+            return View();
+        }
     }
 }
