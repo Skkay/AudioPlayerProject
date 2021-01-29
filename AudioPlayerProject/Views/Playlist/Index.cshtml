@@ -49,8 +49,8 @@ else if (TempData["CreatePlaylistResult"] == "Failure")
                 <td><a asp-area="" asp-controller="Playlist" asp-action="Show" asp-route-id="@playlist.Id">@playlist.Name</a></td>
                 <td>
                     <div class="btn-group">
-                        <a class="btn btn-secondary btn-sm" href="#" role="button">
-                            Button
+                        <a class="btn btn-secondary btn-sm" asp-area="" asp-controller="Playlist" asp-action="Play" asp-route-id="@playlist.Id" role="button">
+                            Play
                         </a>
                         <a class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="sr-only">Toggle Dropdown</span>
