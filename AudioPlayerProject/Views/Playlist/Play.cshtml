@@ -17,7 +17,11 @@
 <div class="list-group my-4" id="playlist">
     @foreach (Music music in musics)
     {
-        <a href="@( "/" + ViewBag.BaseUploadsPath + "/" + music.Path )" class="list-group-item"><i class="fas fa-play mr-4"></i> @music.Title</a>
+        <a href="@( "/" + ViewBag.BaseUploadsPath + "/" + music.Path )" class="list-group-item">
+            <i class="fas fa-play mr-4"></i>
+            @music.Title
+            <span class="badge badge-primary badge-pill float-right">@(music.Duration / 60):@((music.Duration % 60).ToString().PadLeft(2, '0')) </span>
+        </a>
     }
 </div>
 
