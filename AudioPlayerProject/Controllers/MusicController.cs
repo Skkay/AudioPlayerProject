@@ -2,6 +2,7 @@
 using AudioPlayerProject.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -47,12 +48,18 @@ namespace AudioPlayerProject.Controllers
                 {
                     string extension = Path.GetExtension(music.File.FileName);
                     string fileName = music.Title + (string.IsNullOrWhiteSpace(music.Artist) ? "" : " - " + music.Artist) + extension;
-                    
                     string filePath = Path.Combine(this.uploadsFolderPath, fileName);
-
-                    music.Path = fileName;
-                    music.File.CopyTo(new FileStream(filePath, FileMode.Create));
                     
+                    music.Path = fileName;
+
+                    FileStream fs = new FileStream(filePath, FileMode.Create);
+                    music.File.CopyTo(fs);
+                    fs.Close();
+
+                    Mp3FileReader reader = new Mp3FileReader(filePath);
+                    music.Duration = (int)Math.Round(reader.TotalTime.TotalSeconds);
+                    reader.Close();
+
                     contextMusic.Musics.Add(music);
                     contextMusic.SaveChanges();
 
@@ -63,7 +70,7 @@ namespace AudioPlayerProject.Controllers
                 {
                     Console.WriteLine(e.ToString());
                 }
-                
+
             }
             return RedirectToAction();
         }
@@ -88,7 +95,7 @@ namespace AudioPlayerProject.Controllers
                 contextPlaylist.PlaylistMusics.Add(pm);
                 contextPlaylist.SaveChanges();
             }
-            
+
             return RedirectToAction("Index");
         }
     }

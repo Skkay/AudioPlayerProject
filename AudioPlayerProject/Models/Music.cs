@@ -14,6 +14,7 @@ namespace AudioPlayerProject.Models
         public string Title { get; set; }
         public string Artist { get; set; }
         public string Path { get; set; }
+        public int Duration { get; set; }
 
         [NotMapped]
         public IFormFile File { get; set; }
