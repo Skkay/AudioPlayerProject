@@ -17,7 +17,7 @@
 <div class="list-group my-4" id="playlist">
     @foreach (Music music in musics)
     {
-        <a href="@( "/" + ViewBag.BaseUploadsPath + "/" + music.Path )" class="list-group-item">@music.Title</a>
+        <a href="@( "/" + ViewBag.BaseUploadsPath + "/" + music.Path )" class="list-group-item"><i class="fas fa-play mr-4"></i> @music.Title</a>
     }
 </div>
 
@@ -35,8 +35,12 @@
         // Load a track by index and highlight the corresponding link
         let setCurrentSong = function (index) {
             links[currentTrack].classList.remove('active');
+            links[currentTrack].querySelectorAll('i')[0].classList.remove('fa-pause');
+            links[currentTrack].querySelectorAll('i')[0].classList.add('fa-play');
             currentTrack = index;
             links[currentTrack].classList.add('active');
+            links[currentTrack].querySelectorAll('i')[0].classList.remove('fa-play');
+            links[currentTrack].querySelectorAll('i')[0].classList.add('fa-pause');
             wavesurfer.load(links[currentTrack].href);
         };
 
