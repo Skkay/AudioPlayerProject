@@ -38,13 +38,24 @@
 
         // Load a track by index and highlight the corresponding link
         let setCurrentSong = function (index) {
+            // Unset 'active' classes
             links[currentTrack].classList.remove('active');
             links[currentTrack].querySelectorAll('i')[0].classList.remove('fa-pause');
             links[currentTrack].querySelectorAll('i')[0].classList.add('fa-play');
+            links[currentTrack].querySelectorAll('span')[0].classList.remove('badge-light');
+            links[currentTrack].querySelectorAll('span')[0].classList.add('badge-primary');
+
+            // Next track
             currentTrack = index;
+
+            // Set 'active' classes
             links[currentTrack].classList.add('active');
             links[currentTrack].querySelectorAll('i')[0].classList.remove('fa-play');
             links[currentTrack].querySelectorAll('i')[0].classList.add('fa-pause');
+            links[currentTrack].querySelectorAll('span')[0].classList.remove('badge-primary');
+            links[currentTrack].querySelectorAll('span')[0].classList.add('badge-light');
+
+            // Load track
             wavesurfer.load(links[currentTrack].href);
         };
 
