@@ -13,7 +13,7 @@
     <button type="button" class="btn btn-primary" id="loop">Toggle Loop</button>
     <div class="btn-group mx-4" role="group">
         <button type="button" class="btn btn-primary" id="previous">Previous</button>
-        <button type="button" class="btn btn-primary" id="playPause">Toggle Play/Pause</button>
+        <button type="button" class="btn btn-primary" id="playPause"><i class="fas fa-play"></i></button>
         <button type="button" class="btn btn-primary" id="next">Next</button>
     </div>
     <button type="button" class="btn btn-primary" id="mute">Toggle Mute</button>
@@ -57,8 +57,6 @@
 
             // Set 'active' classes
             links[currentTrack].classList.add('active');
-            links[currentTrack].querySelectorAll('i')[0].classList.remove('fa-play');
-            links[currentTrack].querySelectorAll('i')[0].classList.add('fa-pause');
             links[currentTrack].querySelectorAll('span')[0].classList.remove('badge-primary');
             links[currentTrack].querySelectorAll('span')[0].classList.add('badge-light');
 
@@ -92,6 +90,26 @@
                 setCurrentSong((currentTrack) % links.length);
             }
             
+        });
+
+        wavesurfer.on('play', function () {
+            // Button Play/Pause
+            document.querySelector('#playPause').querySelector('i').classList.remove('fa-play');
+            document.querySelector('#playPause').querySelector('i').classList.add('fa-pause');
+
+            // List
+            links[currentTrack].querySelector('i').classList.remove('fa-play');
+            links[currentTrack].querySelector('i').classList.add('fa-pause');
+        });
+
+        wavesurfer.on('pause', function () {
+            // Button Play/Pause
+            document.querySelector('#playPause').querySelector('i').classList.remove('fa-pause');
+            document.querySelector('#playPause').querySelector('i').classList.add('fa-play');
+
+            // List
+            links[currentTrack].querySelector('i').classList.remove('fa-pause');
+            links[currentTrack].querySelector('i').classList.add('fa-play');
         });
 
         // Load the first track
