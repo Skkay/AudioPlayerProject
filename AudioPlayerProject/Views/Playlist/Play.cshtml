@@ -16,7 +16,7 @@
         <button type="button" class="btn btn-primary" id="playPause"><i class="fas fa-play"></i></button>
         <button type="button" class="btn btn-primary" id="next">Next</button>
     </div>
-    <button type="button" class="btn btn-primary" id="mute">Toggle Mute</button>
+    <button type="button" class="btn btn-primary" id="mute"><i class="fas fa-volume-up"></i></button>
 </div>
 
 <div class="list-group my-4" id="playlist">
@@ -110,6 +110,17 @@
             // List
             links[currentTrack].querySelector('i').classList.remove('fa-pause');
             links[currentTrack].querySelector('i').classList.add('fa-play');
+        });
+
+        wavesurfer.on('mute', function (state) {
+            if (state) {
+                document.querySelector('#mute').querySelector('i').classList.remove('fa-volume-up');
+                document.querySelector('#mute').querySelector('i').classList.add('fa-volume-mute');
+            }
+            else {
+                document.querySelector('#mute').querySelector('i').classList.remove('fa-volume-mute');
+                document.querySelector('#mute').querySelector('i').classList.add('fa-volume-up');
+            }
         });
 
         // Load the first track
