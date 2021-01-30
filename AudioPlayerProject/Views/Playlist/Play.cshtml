@@ -10,7 +10,7 @@
 <div class="my-4" id="waveform"></div>
 
 <div class="d-flex justify-content-center">
-    <button type="button" class="btn btn-primary">0</button>
+    <button type="button" class="btn btn-primary" id="loop">Toggle Loop</button>
     <div class="btn-group mx-4" role="group">
         <button type="button" class="btn btn-primary" id="previous">Previous</button>
         <button type="button" class="btn btn-primary" id="playPause">Toggle Play/Pause</button>
@@ -36,6 +36,8 @@
         var wavesurfer = WaveSurfer.create({
             container: '#waveform'
         });
+
+        let loop = false;
 
         // The playlist links
         let links = document.querySelectorAll('#playlist a');
@@ -83,7 +85,13 @@
 
         // Go to the next track on finish
         wavesurfer.on('finish', function () {
-            setCurrentSong((currentTrack + 1) % links.length);
+            if (loop == false) {
+                setCurrentSong((currentTrack + 1) % links.length);
+            }
+            else {
+                setCurrentSong((currentTrack) % links.length);
+            }
+            
         });
 
         // Load the first track
@@ -111,6 +119,11 @@
             if (currentTrack > 0) {
                 setCurrentSong((currentTrack - 1) % links.length);
             }
+        })
+
+        // Loop button
+        document.querySelector('#loop').addEventListener('click', function () {
+            loop = !loop;
         })
     </script>
 }
