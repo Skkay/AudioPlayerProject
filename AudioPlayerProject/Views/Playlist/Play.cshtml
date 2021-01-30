@@ -12,9 +12,9 @@
 <div class="d-flex justify-content-center">
     <button type="button" class="btn btn-primary">0</button>
     <div class="btn-group mx-4" role="group">
-        <button type="button" class="btn btn-primary">0</button>
+        <button type="button" class="btn btn-primary" id="previous">Previous</button>
         <button type="button" class="btn btn-primary" id="playPause">Toggle Play/Pause</button>
-        <button type="button" class="btn btn-primary">0</button>
+        <button type="button" class="btn btn-primary" id="next">Next</button>
     </div>
     <button type="button" class="btn btn-primary" id="mute">Toggle Mute</button>
 </div>
@@ -97,6 +97,20 @@
         // Toggle Mute button
         document.querySelector('#mute').addEventListener('click', function () {
             wavesurfer.toggleMute();
+        })
+
+        // Next button
+        document.querySelector('#next').addEventListener('click', function () {
+            if (currentTrack < links.length - 1) {
+                setCurrentSong((currentTrack + 1) % links.length);
+            }
+        })
+
+        // Previous button
+        document.querySelector('#previous').addEventListener('click', function () {
+            if (currentTrack > 0) {
+                setCurrentSong((currentTrack - 1) % links.length);
+            }
         })
     </script>
 }
