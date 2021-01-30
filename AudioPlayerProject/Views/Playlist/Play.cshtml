@@ -13,7 +13,7 @@
     <button type="button" class="btn btn-primary">0</button>
     <div class="btn-group mx-4" role="group">
         <button type="button" class="btn btn-primary">0</button>
-        <button type="button" class="btn btn-primary">0</button>
+        <button type="button" class="btn btn-primary" id="playPause">Toggle Play/Pause</button>
         <button type="button" class="btn btn-primary">0</button>
     </div>
     <button type="button" class="btn btn-primary">0</button>
@@ -88,5 +88,10 @@
 
         // Load the first track
         setCurrentSong(currentTrack);
+
+        // Toggle Play / Pause button
+        document.querySelector('#playPause').addEventListener('click', function () {
+            wavesurfer.playPause();
+        })
     </script>
 }
