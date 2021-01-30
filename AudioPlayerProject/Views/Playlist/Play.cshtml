@@ -16,7 +16,7 @@
         <button type="button" class="btn btn-primary" id="playPause">Toggle Play/Pause</button>
         <button type="button" class="btn btn-primary">0</button>
     </div>
-    <button type="button" class="btn btn-primary">0</button>
+    <button type="button" class="btn btn-primary" id="mute">Toggle Mute</button>
 </div>
 
 <div class="list-group my-4" id="playlist">
@@ -92,6 +92,11 @@
         // Toggle Play / Pause button
         document.querySelector('#playPause').addEventListener('click', function () {
             wavesurfer.playPause();
+        })
+
+        // Toggle Mute button
+        document.querySelector('#mute').addEventListener('click', function () {
+            wavesurfer.toggleMute();
         })
     </script>
 }
