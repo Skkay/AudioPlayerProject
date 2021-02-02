@@ -85,18 +85,25 @@ namespace AudioPlayerProject.Controllers
 
         public IActionResult AddToPlaylist(int playlist_id, int music_id)
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get actual user id
-            IEnumerable<Playlist> usersPlaylist = contextPlaylist.Playlists.ToList().Where(p => (p.AudioPlayerProjectUserId == userId) && (p.Id == playlist_id));
-
-            if (usersPlaylist.Any()) // If user owns this playlist
+            if (UserOwnsPlaylist(playlist_id)) // If user owns this playlist
             {
                 PlaylistMusic pm = new PlaylistMusic() { MusicId = music_id, PlaylistId = playlist_id };
 
                 contextPlaylist.PlaylistMusics.Add(pm);
                 contextPlaylist.SaveChanges();
+
+                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Index");
+            return NotFound();
+        }
+
+        private bool UserOwnsPlaylist(int playlist_id)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get actual user id
+            IEnumerable<Playlist> userPlaylists = contextPlaylist.Playlists.ToList().Where(p => (p.AudioPlayerProjectUserId == userId) && (p.Id == playlist_id));
+
+            return userPlaylists.Any();
         }
     }
 }
