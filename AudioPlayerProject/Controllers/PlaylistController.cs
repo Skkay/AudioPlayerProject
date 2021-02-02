@@ -49,42 +49,62 @@ namespace AudioPlayerProject.Controllers
 
         public IActionResult Update(int id)
         {
-            Playlist playlist = context.Playlists.Find(id);
-            ViewBag.Playlist = playlist;
-            return View();
+            if (UserOwnsPlaylist(id))
+            {
+                Playlist playlist = context.Playlists.Find(id);
+                ViewBag.Playlist = playlist;
+                return View();
+            }
+
+            return NotFound();
         }
 
         [HttpPost]
         public IActionResult Update(int playlist_id, string new_playlist_name)
         {
-            Playlist playlist = context.Playlists.Find(playlist_id);
-            playlist.Name = new_playlist_name;
+            if (UserOwnsPlaylist(playlist_id))
+            {
+                Playlist playlist = context.Playlists.Find(playlist_id);
+                playlist.Name = new_playlist_name;
 
-            context.Playlists.Update(playlist);
-            context.SaveChanges();
+                context.Playlists.Update(playlist);
+                context.SaveChanges();
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+
+            return NotFound();
         }
 
         public IActionResult Delete(int id)
         {
-            Playlist playlist = context.Playlists.Find(id);
-            ViewBag.Playlist = playlist;
-            return View();
+            if (UserOwnsPlaylist(id))
+            {
+                Playlist playlist = context.Playlists.Find(id);
+                ViewBag.Playlist = playlist;
+                return View();
+            }
+
+            return NotFound();
         }
 
         [HttpPost]
         public IActionResult Delete(int playlist_id, string confirm_playlist_name)
         {
-            Playlist playlist = context.Playlists.Find(playlist_id);
-
-            if (confirm_playlist_name == playlist.Name)
+            if (UserOwnsPlaylist(playlist_id))
             {
-                context.Playlists.Remove(playlist);
-                context.SaveChanges();
+                Playlist playlist = context.Playlists.Find(playlist_id);
+
+                if (confirm_playlist_name == playlist.Name)
+                {
+                    context.Playlists.Remove(playlist);
+                    context.SaveChanges();
+                }
+
+                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Index");
+            return NotFound();
         }
 
         public IActionResult Show(int id)
@@ -123,6 +143,14 @@ namespace AudioPlayerProject.Controllers
             ViewBag.Musics = musics;
             ViewBag.BaseUploadsPath = this.uploadsFolderName;
             return View();
+        }
+
+        private bool UserOwnsPlaylist(int playlist_id)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get actual user id
+            IEnumerable<Playlist> userPlaylists = context.Playlists.ToList().Where(p => (p.AudioPlayerProjectUserId == userId) && (p.Id == playlist_id));
+
+            return userPlaylists.Any();
         }
     }
 }
