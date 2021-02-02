@@ -47,18 +47,18 @@
         let setCurrentSong = function (index) {
             // Unset 'active' classes
             links[currentTrack].classList.remove('active');
-            links[currentTrack].querySelectorAll('i')[0].classList.remove('fa-pause');
-            links[currentTrack].querySelectorAll('i')[0].classList.add('fa-play');
-            links[currentTrack].querySelectorAll('span')[0].classList.remove('badge-light');
-            links[currentTrack].querySelectorAll('span')[0].classList.add('badge-primary');
+            links[currentTrack].querySelector('i').classList.remove('fa-pause');
+            links[currentTrack].querySelector('i').classList.add('fa-play');
+            links[currentTrack].querySelector('span').classList.remove('badge-light');
+            links[currentTrack].querySelector('span').classList.add('badge-primary');
 
             // Next track
             currentTrack = index;
 
             // Set 'active' classes
             links[currentTrack].classList.add('active');
-            links[currentTrack].querySelectorAll('span')[0].classList.remove('badge-primary');
-            links[currentTrack].querySelectorAll('span')[0].classList.add('badge-light');
+            links[currentTrack].querySelector('span').classList.remove('badge-primary');
+            links[currentTrack].querySelector('span').classList.add('badge-light');
 
             // Load track
             wavesurfer.load(links[currentTrack].href);
