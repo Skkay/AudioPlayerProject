@@ -1,5 +1,6 @@
 ﻿using AudioPlayerProject.Data;
 using AudioPlayerProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using NAudio.Wave;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace AudioPlayerProject.Controllers
 {
+    [Authorize]
     public class MusicController : Controller
     {
         private readonly IHostingEnvironment hostingEnvironment;

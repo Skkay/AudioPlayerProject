@@ -1,5 +1,6 @@
 ﻿using AudioPlayerProject.Data;
 using AudioPlayerProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace AudioPlayerProject.Controllers
 {
+    [Authorize]
     public class PlaylistController : Controller
     {
         private PlaylistContext context;
