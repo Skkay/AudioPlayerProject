@@ -5,7 +5,7 @@
     Playlist playlist = ViewBag.Playlist;
     ViewData["Title"] = @playlist.Name;
 }
-<h3>@playlist.Name</h3>
+<h3>@playlist.Name <a class="btn btn-sm btn-success mx-2 px-3" asp-area="" asp-controller="Playlist" asp-action="Play" asp-route-id="@playlist.Id"><i class="fas fa-play"></i></a></h3>
 
 <hr class="my-4" />
 
