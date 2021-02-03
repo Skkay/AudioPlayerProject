@@ -26,8 +26,8 @@
             <td>@music.Id</td>
             <td>@music.Title</td>
             <td>@music.Artist</td>
-            <td class="text-center"><a class="btn btn-sm btn-primary" asp-area="" asp-controller="Music" asp-action="Play" asp-route-id="@music.Id">Play</a></td>
-            <td class="text-center"><a class="btn btn-sm btn-danger" asp-area="" asp-controller="Playlist" asp-action="RemoveFromPlaylist" asp-route-playlist_id="@playlist.Id" asp-route-music_id="@music.Id">Retirer</a></td>
+            <td class="text-center"><a class="btn btn-sm btn-primary px-3" asp-area="" asp-controller="Music" asp-action="Play" asp-route-id="@music.Id"><i class="fas fa-play"></i></a></td>
+            <td class="text-center"><a class="btn btn-sm btn-danger px-3" asp-area="" asp-controller="Playlist" asp-action="RemoveFromPlaylist" asp-route-playlist_id="@playlist.Id" asp-route-music_id="@music.Id"><i class="fas fa-trash"></i></a></td>
         </tr>
         }
     </tbody>
