@@ -34,7 +34,11 @@
     <script src="https://unpkg.com/wavesurfer.js"></script>
     <script>
         var wavesurfer = WaveSurfer.create({
-            container: '#waveform'
+            container: '#waveform',
+            waveColor: '#317AC8',
+            progressColor: '#143875',
+            height: 120,
+            barWidth: 3
         });
 
         let loop = false;
