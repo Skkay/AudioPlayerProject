@@ -43,7 +43,7 @@ namespace AudioPlayerProject.Controllers
         [HttpPost]
         public IActionResult Index(Music music)
         {
-            ViewData["UploadMusicResult"] = "Failure";
+            TempData["UploadMusicResult"] = "Failure";
             if (music.File != null)
             {
                 try
@@ -65,7 +65,7 @@ namespace AudioPlayerProject.Controllers
                     contextMusic.Musics.Add(music);
                     contextMusic.SaveChanges();
 
-                    ViewData["UploadMusicResult"] = "Success";
+                    TempData["UploadMusicResult"] = "Success";
                     ModelState.Clear();
                 }
                 catch (Exception e)

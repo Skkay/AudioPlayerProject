@@ -4,16 +4,16 @@
     ViewData["Title"] = "Music Page";
 }
 
-@if (ViewData["UploadMusicResult"] == "Success")
+@if (TempData["UploadMusicResult"] as string == "Success")
 {
     <div class="alert alert-success" role="alert">
         La musique a été ajoutée avec succès !
     </div>
 }
-else if (ViewData["UploadMusicResult"] == "Failure")
+else if (TempData["UploadMusicResult"] as string == "Failure")
 {
     <div class="alert alert-danger" role="alert">
-        Une erreur s'est produit lors de l'ajout de la musique
+        Une erreur s'est produite lors de l'ajout de la musique.
     </div>
 }
 
