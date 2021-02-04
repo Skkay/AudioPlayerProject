@@ -21,8 +21,10 @@
 
 <hr class="my-4" />
 
+<input type="text" class="form-control mb-4" id="search" onkeyup="searchTableFunction('search', 'table', 1)" placeholder="Rechercher...">
+
 @{ List<Playlist> playlists = ViewBag.PlaylistList; }
-<table class="table table-sm table-hover table-striped">
+<table class="table table-sm table-hover table-striped" id="table">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -55,3 +57,7 @@
         }
     </tbody>
 </table>
+
+@section Scripts {
+    <script src="~/js/searchTable.js"></script>
+}
