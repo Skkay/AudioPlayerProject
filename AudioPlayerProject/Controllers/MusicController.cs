@@ -89,11 +89,15 @@ namespace AudioPlayerProject.Controllers
         {
             if (UserOwnsPlaylist(playlist_id)) // If user owns this playlist
             {
-                PlaylistMusic pm = new PlaylistMusic() { MusicId = music_id, PlaylistId = playlist_id };
+                IEnumerable<PlaylistMusic> listPM = contextPlaylist.PlaylistMusics.ToList().Where(pm => (pm.PlaylistId == playlist_id) && (pm.MusicId == music_id));
+                if (!listPM.Any()) // Check if music_id isn't already in playlist_id
+                {
+                    PlaylistMusic pm = new PlaylistMusic() { MusicId = music_id, PlaylistId = playlist_id };
 
-                contextPlaylist.PlaylistMusics.Add(pm);
-                contextPlaylist.SaveChanges();
-
+                    contextPlaylist.PlaylistMusics.Add(pm);
+                    contextPlaylist.SaveChanges();
+                }
+                
                 return RedirectToAction("Index");
             }
 
