@@ -107,20 +107,36 @@ namespace AudioPlayerProject.Controllers
         [HttpPost]
         public IActionResult Delete(int playlist_id, string confirm_playlist_name)
         {
-            if (UserOwnsPlaylist(playlist_id))
+            TempData["DeletePlaylistResult"] = "Failure";
+            try
             {
-                Playlist playlist = context.Playlists.Find(playlist_id);
-
-                if (confirm_playlist_name == playlist.Name)
+                if (UserOwnsPlaylist(playlist_id))
                 {
-                    context.Playlists.Remove(playlist);
-                    context.SaveChanges();
-                }
+                    Playlist playlist = context.Playlists.Find(playlist_id);
 
-                return RedirectToAction("Index");
+                    if (confirm_playlist_name == playlist.Name)
+                    {
+                        context.Playlists.Remove(playlist);
+                        context.SaveChanges();
+
+                        TempData["DeletePlaylistResult"] = "Success";
+                    }
+                    else
+                    {
+                        TempData["DeletePlaylistResult"] = "Confirmation not valid";
+                    }
+                }
+                else
+                {
+                    TempData["DeletePlaylistResult"] = "Playlist not found";
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
             }
 
-            return NotFound();
+            return RedirectToAction("Index");
         }
 
         public IActionResult Show(int id)

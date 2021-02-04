@@ -39,6 +39,32 @@ else if (TempData["UpdatePlaylistResult"] as string == "Failure")
     </div>
 }
 
+@{ /* Playlist delete results */ }
+@if (TempData["DeletePlaylistResult"] as string == "Success")
+{
+    <div class="alert alert-success" role="alert">
+        La playlist a été supprimée avec succès !
+    </div>
+}
+else if (TempData["DeletePlaylistResult"] as string == "Confirmation not valid")
+{
+    <div class="alert alert-warning" role="alert">
+        La confirmation n'est pas valide.
+    </div>
+}
+else if (TempData["DeletePlaylistResult"] as string == "Playlist not found")
+{
+    <div class="alert alert-danger" role="alert">
+        La playlist est introuvable.
+    </div>
+}
+else if (TempData["DeletePlaylistResult"] as string == "Failure")
+{
+    <div class="alert alert-danger" role="alert">
+        Une erreur s'est produite.
+    </div>
+}
+
 @model Playlist
 <form asp-action="Index" enctype="multipart/form-data">
     <div class="form-row">
