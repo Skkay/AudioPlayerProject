@@ -66,18 +66,30 @@ namespace AudioPlayerProject.Controllers
         [HttpPost]
         public IActionResult Update(int playlist_id, string new_playlist_name)
         {
-            if (UserOwnsPlaylist(playlist_id))
+            TempData["UpdatePlaylistResult"] = "Failure";
+            try
             {
-                Playlist playlist = context.Playlists.Find(playlist_id);
-                playlist.Name = new_playlist_name;
+                if (UserOwnsPlaylist(playlist_id))
+                {
+                    Playlist playlist = context.Playlists.Find(playlist_id);
+                    playlist.Name = new_playlist_name;
 
-                context.Playlists.Update(playlist);
-                context.SaveChanges();
+                    context.Playlists.Update(playlist);
+                    context.SaveChanges();
 
-                return RedirectToAction("Index");
+                    TempData["UpdatePlaylistResult"] = "Success";
+                }
+                else
+                {
+                    TempData["UpdatePlaylistResult"] = "Playlist not found";
+                }
             }
-
-            return NotFound();
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            
+            return RedirectToAction("Index");
         }
 
         public IActionResult Delete(int id)

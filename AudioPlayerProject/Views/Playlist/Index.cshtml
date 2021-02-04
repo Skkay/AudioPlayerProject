@@ -5,6 +5,7 @@
 }
 <h3>Playlist</h3>
 
+@{ /* Playlist creation results */ }
 @if (TempData["CreatePlaylistResult"] as string == "Success")
 {
     <div class="alert alert-success" role="alert">
@@ -15,6 +16,26 @@ else if (TempData["CreatePlaylistResult"] as string == "Failure")
 {
     <div class="alert alert-danger" role="alert">
         Une erreur s'est produit lors de la création de la playlist.
+    </div>
+}
+
+@{ /* Playlist update results */ }
+@if (TempData["UpdatePlaylistResult"] as string == "Success")
+{
+    <div class="alert alert-success" role="alert">
+        La playlist a été renommée avec succès !
+    </div>
+}
+else if (TempData["UpdatePlaylistResult"] as string == "Playlist not found")
+{
+    <div class="alert alert-danger" role="alert">
+        La playlist est introuvable.
+    </div>
+}
+else if (TempData["UpdatePlaylistResult"] as string == "Failure")
+{
+    <div class="alert alert-danger" role="alert">
+        Une erreur s'est produite.
     </div>
 }
 
