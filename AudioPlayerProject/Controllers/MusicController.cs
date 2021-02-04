@@ -43,7 +43,7 @@ namespace AudioPlayerProject.Controllers
         [HttpPost]
         public IActionResult Index(Music music)
         {
-            TempData["UploadMusicResult"] = "Failure";
+            TempData["ConfirmationResult"] = new string[] { "danger", "Une erreur s'est produite lors de l'ajout de la musique." };
             if (music.File != null)
             {
                 try
@@ -65,7 +65,7 @@ namespace AudioPlayerProject.Controllers
                     contextMusic.Musics.Add(music);
                     contextMusic.SaveChanges();
 
-                    TempData["UploadMusicResult"] = "Success";
+                    TempData["ConfirmationResult"] = new string[] { "success", "La musique a été ajoutée avec succès !" };
                     ModelState.Clear();
                 }
                 catch (Exception e)
@@ -87,7 +87,7 @@ namespace AudioPlayerProject.Controllers
 
         public IActionResult AddToPlaylist(int playlist_id, int music_id)
         {
-            TempData["AddToPlaylistResult"] = "Failure";
+            TempData["ConfirmationResult"] = new string[] { "danger", "Une erreur s'est produite lors de l'ajout à une playlist." };
             if (UserOwnsPlaylist(playlist_id)) // If user owns this playlist
             {
                 IEnumerable<PlaylistMusic> listPM = contextPlaylist.PlaylistMusics.ToList().Where(pm => (pm.PlaylistId == playlist_id) && (pm.MusicId == music_id));
@@ -98,16 +98,16 @@ namespace AudioPlayerProject.Controllers
                     contextPlaylist.PlaylistMusics.Add(pm);
                     contextPlaylist.SaveChanges();
 
-                    TempData["AddToPlaylistResult"] = "Success";
+                    TempData["ConfirmationResult"] = new string[] { "success", "La musique a été ajoutée à la playlist avec succès !" };
                 }
                 else
                 {
-                    TempData["AddToPlaylistResult"] = "Music already in playlist";
+                    TempData["ConfirmationResult"] = new string[] { "warning", "La musique est déjà dans cette playlist." };
                 }
             }
             else
             {
-                TempData["AddToPlaylistResult"] = "Playlist not found";
+                TempData["ConfirmationResult"] = new string[] { "danger", "La playlist est introuvable." };
             }
 
             return RedirectToAction("Index");

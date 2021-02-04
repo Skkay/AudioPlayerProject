@@ -1,0 +1,16 @@
+﻿@{ 
+    /*  
+        [0] Bootstrap classes colors (primary, secondary, success, danger, warning, info, light, dark)
+        [1] Result message
+    */
+    string[] result = TempData["ConfirmationResult"] as string[]; 
+}
+@if (TempData["ConfirmationResult"] != null)
+{
+    <div class="alert alert-@result[0] alert-dismissible fade show" role="alert">
+        @result[1]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}

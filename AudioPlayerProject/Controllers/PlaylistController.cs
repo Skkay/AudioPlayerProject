@@ -32,7 +32,7 @@ namespace AudioPlayerProject.Controllers
         [HttpPost]
         public IActionResult Index(Playlist playlist)
         {
-            TempData["CreatePlaylistResult"] = "Failure";
+            TempData["ConfirmationResult"] = new string[] { "danger", "Une erreur s'est produite lors de la création de la playlist." };
             try
             {
                 string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -41,7 +41,7 @@ namespace AudioPlayerProject.Controllers
                 context.Playlists.Add(playlist);
                 context.SaveChanges();
 
-                TempData["CreatePlaylistResult"] = "Success";
+                TempData["ConfirmationResult"] = new string[] { "success", "La playlist a été créée avec succès !" };
                 ModelState.Clear();
             }
             catch (Exception e)
@@ -66,7 +66,7 @@ namespace AudioPlayerProject.Controllers
         [HttpPost]
         public IActionResult Update(int playlist_id, string new_playlist_name)
         {
-            TempData["UpdatePlaylistResult"] = "Failure";
+            TempData["ConfirmationResult"] = new string[] { "danger", "Une erreur s'est produite lors du renommage de la playlist." };
             try
             {
                 if (UserOwnsPlaylist(playlist_id))
@@ -77,11 +77,11 @@ namespace AudioPlayerProject.Controllers
                     context.Playlists.Update(playlist);
                     context.SaveChanges();
 
-                    TempData["UpdatePlaylistResult"] = "Success";
+                    TempData["ConfirmationResult"] = new string[] { "success", "La playlist a été renommée avec succès !" };
                 }
                 else
                 {
-                    TempData["UpdatePlaylistResult"] = "Playlist not found";
+                    TempData["ConfirmationResult"] = new string[] { "danger", "La playlist est introuvable." };
                 }
             }
             catch (Exception e)
@@ -107,7 +107,7 @@ namespace AudioPlayerProject.Controllers
         [HttpPost]
         public IActionResult Delete(int playlist_id, string confirm_playlist_name)
         {
-            TempData["DeletePlaylistResult"] = "Failure";
+            TempData["ConfirmationResult"] = new string[] { "danger", "Une erreur s'est produite lors de la suppression de la playlist." };
             try
             {
                 if (UserOwnsPlaylist(playlist_id))
@@ -119,16 +119,16 @@ namespace AudioPlayerProject.Controllers
                         context.Playlists.Remove(playlist);
                         context.SaveChanges();
 
-                        TempData["DeletePlaylistResult"] = "Success";
+                        TempData["ConfirmationResult"] = new string[] { "success", "La playlist a été supprimée avec succès !" };
                     }
                     else
                     {
-                        TempData["DeletePlaylistResult"] = "Confirmation not valid";
+                        TempData["ConfirmationResult"] = new string[] { "warning", "La confirmation est invalide." };
                     }
                 }
                 else
                 {
-                    TempData["DeletePlaylistResult"] = "Playlist not found";
+                    TempData["ConfirmationResult"] = new string[] { "danger", "La playlist est introuvable." };
                 }
             }
             catch (Exception e)

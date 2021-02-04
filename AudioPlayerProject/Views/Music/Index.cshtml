@@ -4,45 +4,7 @@
     ViewData["Title"] = "Music Page";
 }
 
-@{ /* Upload music results */ }
-@if (TempData["UploadMusicResult"] as string == "Success")
-{
-    <div class="alert alert-success" role="alert">
-        La musique a été ajoutée avec succès !
-    </div>
-}
-else if (TempData["UploadMusicResult"] as string == "Failure")
-{
-    <div class="alert alert-danger" role="alert">
-        Une erreur s'est produite lors de l'ajout de la musique.
-    </div>
-}
-
-@{ /* Add music to playlist results */ }
-@if (TempData["AddToPlaylistResult"] as string == "Success")
-{
-    <div class="alert alert-success" role="alert">
-        La musique a été ajoutée à la playlist avec succès !
-    </div>
-}
-else if (TempData["AddToPlaylistResult"] as string == "Music already in playlist")
-{
-    <div class="alert alert-warning" role="alert">
-        Cette musique est déjà dans cette playlist.
-    </div>
-}
-else if (TempData["AddToPlaylistResult"] as string == "Playlist not found")
-{
-    <div class="alert alert-danger" role="alert">
-        La playlist est introuvable.
-    </div>
-}
-else if (TempData["AddToPlaylistResult"] as string == "Failure")
-{
-    <div class="alert alert-danger" role="alert">
-        Une erreur s'est produite.
-    </div>
-}
+<partial name="_ConfirmationResult" />
 
 @model Music
 <form asp-action="Index" enctype="multipart/form-data">
