@@ -1,4 +1,5 @@
-﻿using AudioPlayerProject.Models;
+﻿using AudioPlayerProject.Data;
+using AudioPlayerProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,14 +15,17 @@ namespace AudioPlayerProject.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private MusicContext context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, MusicContext context)
         {
             _logger = logger;
+            this.context = context;
         }
 
         public IActionResult Index()
         {
+            ViewBag.MusicCount = context.Musics.Count();
             return View();
         }
 
