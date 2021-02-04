@@ -5,16 +5,16 @@
 }
 <h3>Playlist</h3>
 
-@if (TempData["CreatePlaylistResult"] == "Success")
+@if (TempData["CreatePlaylistResult"] as string == "Success")
 {
     <div class="alert alert-success" role="alert">
-        La musique a été créée avec succès !
+        La playlist a été créée avec succès !
     </div>
 }
-else if (TempData["CreatePlaylistResult"] == "Failure")
+else if (TempData["CreatePlaylistResult"] as string == "Failure")
 {
     <div class="alert alert-danger" role="alert">
-        Une erreur s'est produit lors de la création de la playlist
+        Une erreur s'est produit lors de la création de la playlist.
     </div>
 }
 

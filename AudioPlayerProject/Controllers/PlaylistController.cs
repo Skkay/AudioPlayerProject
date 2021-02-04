@@ -32,6 +32,7 @@ namespace AudioPlayerProject.Controllers
         [HttpPost]
         public IActionResult Index(Playlist playlist)
         {
+            TempData["CreatePlaylistResult"] = "Failure";
             try
             {
                 string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -40,6 +41,7 @@ namespace AudioPlayerProject.Controllers
                 context.Playlists.Add(playlist);
                 context.SaveChanges();
 
+                TempData["CreatePlaylistResult"] = "Success";
                 ModelState.Clear();
             }
             catch (Exception e)
