@@ -4,6 +4,7 @@
     ViewData["Title"] = "Music Page";
 }
 
+@{ /* Upload music results */ }
 @if (TempData["UploadMusicResult"] as string == "Success")
 {
     <div class="alert alert-success" role="alert">
@@ -14,6 +15,32 @@ else if (TempData["UploadMusicResult"] as string == "Failure")
 {
     <div class="alert alert-danger" role="alert">
         Une erreur s'est produite lors de l'ajout de la musique.
+    </div>
+}
+
+@{ /* Add music to playlist results */ }
+@if (TempData["AddToPlaylistResult"] as string == "Success")
+{
+    <div class="alert alert-success" role="alert">
+        La musique a été ajoutée à la playlist avec succès !
+    </div>
+}
+else if (TempData["AddToPlaylistResult"] as string == "Music already in playlist")
+{
+    <div class="alert alert-warning" role="alert">
+        Cette musique est déjà dans cette playlist.
+    </div>
+}
+else if (TempData["AddToPlaylistResult"] as string == "Playlist not found")
+{
+    <div class="alert alert-danger" role="alert">
+        La playlist est introuvable.
+    </div>
+}
+else if (TempData["AddToPlaylistResult"] as string == "Failure")
+{
+    <div class="alert alert-danger" role="alert">
+        Une erreur s'est produite.
     </div>
 }
 
@@ -39,7 +66,7 @@ else if (TempData["UploadMusicResult"] as string == "Failure")
 <hr class="my-4" />
 
 @{ List<Music> musics = ViewBag.MusicList; }
-@{ List<Playlist> playlists= ViewBag.PlaylistList; }
+@{ List<Playlist> playlists = ViewBag.PlaylistList; }
 <table class="table table-sm table-hover table-striped">
     <thead>
         <tr>
@@ -53,27 +80,27 @@ else if (TempData["UploadMusicResult"] as string == "Failure")
     <tbody>
         @foreach (Music music in musics)
         {
-        <tr>
-            <td>@music.Id</td>
-            <td>@music.Title</td>
-            <td>@music.Artist</td>
-            <td class="text-center"><a class="btn btn-sm btn-primary px-3" asp-area="" asp-controller="Music" asp-action="Play" asp-route-id="@music.Id"><i class="fas fa-play"></i></a></td>
-            <td class="text-center">
-                <div class="dropdown">
-                    <a class="btn btn-secondary btn-sm dropdown-toggle px-2" href="#" role="button" id="addToPlaylist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-plus"></i>
-                    </a>
+            <tr>
+                <td>@music.Id</td>
+                <td>@music.Title</td>
+                <td>@music.Artist</td>
+                <td class="text-center"><a class="btn btn-sm btn-primary px-3" asp-area="" asp-controller="Music" asp-action="Play" asp-route-id="@music.Id"><i class="fas fa-play"></i></a></td>
+                <td class="text-center">
+                    <div class="dropdown">
+                        <a class="btn btn-secondary btn-sm dropdown-toggle px-2" href="#" role="button" id="addToPlaylist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-plus"></i>
+                        </a>
 
-                    <div class="dropdown-menu" aria-labelledby="addToPlaylist">
-                        <h6 class="dropdown-header">Playlist</h6>
-                        @foreach (Playlist playlist in playlists)
-                        {
-                            <a class="dropdown-item" asp-area="" asp-controller="Music" asp-action="AddToPlaylist" asp-route-playlist_id="@playlist.Id" asp-route-music_id="@music.Id">@playlist.Name</a>
-                        }
+                        <div class="dropdown-menu" aria-labelledby="addToPlaylist">
+                            <h6 class="dropdown-header">Playlist</h6>
+                            @foreach (Playlist playlist in playlists)
+                            {
+                                <a class="dropdown-item" asp-area="" asp-controller="Music" asp-action="AddToPlaylist" asp-route-playlist_id="@playlist.Id" asp-route-music_id="@music.Id">@playlist.Name</a>
+                            }
+                        </div>
                     </div>
-                </div>
-            </td>
-        </tr>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

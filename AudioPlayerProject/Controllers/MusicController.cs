@@ -87,6 +87,7 @@ namespace AudioPlayerProject.Controllers
 
         public IActionResult AddToPlaylist(int playlist_id, int music_id)
         {
+            TempData["AddToPlaylistResult"] = "Failure";
             if (UserOwnsPlaylist(playlist_id)) // If user owns this playlist
             {
                 IEnumerable<PlaylistMusic> listPM = contextPlaylist.PlaylistMusics.ToList().Where(pm => (pm.PlaylistId == playlist_id) && (pm.MusicId == music_id));
@@ -96,12 +97,20 @@ namespace AudioPlayerProject.Controllers
 
                     contextPlaylist.PlaylistMusics.Add(pm);
                     contextPlaylist.SaveChanges();
+
+                    TempData["AddToPlaylistResult"] = "Success";
                 }
-                
-                return RedirectToAction("Index");
+                else
+                {
+                    TempData["AddToPlaylistResult"] = "Music already in playlist";
+                }
+            }
+            else
+            {
+                TempData["AddToPlaylistResult"] = "Playlist not found";
             }
 
-            return NotFound();
+            return RedirectToAction("Index");
         }
 
         private bool UserOwnsPlaylist(int playlist_id)
