@@ -11,7 +11,5 @@ namespace AudioPlayerProject.Models
         public string Name { get; set; }
 
         public string AudioPlayerProjectUserId { get; set; }
-
-        public ICollection<PlaylistMusic> PlaylistMusics { get; set; }
     }
 }
