@@ -10,13 +10,11 @@ namespace AudioPlayerProject.Tests
     public class PlaylistTest
     {
         private PlaylistContext context;
-        private Playlist playlist;
 
         public PlaylistTest()
         {
             var options = new DbContextOptionsBuilder<PlaylistContext>().UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=AudioPlayerProject;Trusted_Connection=True;MultipleActiveResultSets=true").Options;
             this.context = new PlaylistContext(options);
-            this.playlist = new Playlist() { AudioPlayerProjectUserId = "test_id", Name = "test_name" };
         }
         
         [Fact]
@@ -25,7 +23,36 @@ namespace AudioPlayerProject.Tests
             string result = null;
             try
             {
-                context.Playlists.Add(this.playlist);
+                using (var transaction = context.Database.BeginTransaction())
+                {
+                    Playlist playlist = new Playlist { AudioPlayerProjectUserId = "test_id", Id = -1, Name = "test_name" };
+                    context.Playlists.Add(playlist);
+
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Playlist ON;");
+                    context.SaveChanges();
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Playlist OFF;");
+
+                    transaction.Commit();
+
+                    result = "ok";
+                }
+            }
+            catch (Exception e)
+            {
+                result = e.ToString();
+            }
+
+            Assert.True(result == "ok", result);
+        }
+
+        [Fact]
+        public void Remove()
+        {
+            string result = null;
+            try
+            {
+                Playlist p = context.Playlists.Find(-1);
+                context.Playlists.Remove(p);
                 context.SaveChanges();
                 result = "ok";
             }
