@@ -7,6 +7,7 @@ using Xunit;
 
 namespace AudioPlayerProject.Tests
 {
+    [TestCaseOrderer("AudioPlayerProject.Tests.AlphabeticalOrderer", "AudioPlayerProject.Tests")]
     public class PlaylistTest
     {
         private PlaylistContext context;
@@ -18,7 +19,7 @@ namespace AudioPlayerProject.Tests
         }
         
         [Fact]
-        public void Insert()
+        public void a_Insert()
         {
             string result = null;
             try
@@ -46,7 +47,30 @@ namespace AudioPlayerProject.Tests
         }
 
         [Fact]
-        public void Remove()
+        public void b_Update()
+        {
+            string result = null;
+            try
+            {
+                Playlist p = context.Playlists.Find(-1);
+                p.Name = "new_test_name";
+
+                context.Playlists.Update(p);
+                context.SaveChanges();
+
+                Playlist new_p = context.Playlists.Find(-1);
+                result = new_p.Name;
+            }
+            catch (Exception e)
+            {
+                result = e.ToString();
+            }
+
+            Assert.True(result == "new_test_name", result);
+        }
+
+        [Fact]
+        public void c_Remove()
         {
             string result = null;
             try
