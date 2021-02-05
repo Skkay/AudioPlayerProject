@@ -48,5 +48,24 @@ namespace AudioPlayerProject.Tests
 
             Assert.True(result == "ok", result);
         }
+
+        [Fact]
+        public void b_Remove()
+        {
+            string result = null;
+            try
+            {
+                Music m = context.Musics.Find(-1);
+                context.Musics.Remove(m);
+                context.SaveChanges();
+                result = "ok";
+            }
+            catch (Exception e)
+            {
+                result = e.ToString();
+            }
+
+            Assert.True(result == "ok", result);
+        }
     }
 }
