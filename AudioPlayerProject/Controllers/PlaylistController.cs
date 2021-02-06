@@ -36,6 +36,15 @@ namespace AudioPlayerProject.Controllers
             try
             {
                 string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                /* Check if a playlist with this name already exists in database */
+                bool playlistAlreadyExist = context.Playlists.ToList().Where(p => p.AudioPlayerProjectUserId == userId && p.Name == playlist.Name).Any();
+                if (playlistAlreadyExist)
+                {
+                    TempData["ConfirmationResult"] = new string[] { "danger", "Une playlist de ce nom existe déjà." };
+                    return RedirectToAction();
+                }
+
                 playlist.AudioPlayerProjectUserId = userId;
 
                 context.Playlists.Add(playlist);
