@@ -262,3 +262,6 @@ __pycache__/
 
 # uploads folder
 uploads/
+
+# Examples folder
+MP3_Examples/
