@@ -48,20 +48,32 @@ namespace AudioPlayerProject.Controllers
             {
                 try
                 {
+                    /* Get some informations about the music */
                     string extension = Path.GetExtension(music.File.FileName);
                     string fileName = music.Title + (string.IsNullOrWhiteSpace(music.Artist) ? "" : " - " + music.Artist) + extension;
                     string filePath = Path.Combine(this.uploadsFolderPath, fileName);
                     
-                    music.Path = fileName;
+                    music.Path = fileName; // Set music path for database
 
+                    /* Check if the music is already in database */
+                    bool musicAlreadyExist = contextMusic.Musics.ToList().Where(m => m.Path == fileName).Any();
+                    if (musicAlreadyExist)
+                    {
+                        TempData["ConfirmationResult"] = new string[] { "danger", "Cette musique est déjà présente." };
+                        return RedirectToAction();
+                    }
+
+                    /* Save the music to uploads folder */
                     FileStream fs = new FileStream(filePath, FileMode.Create);
                     music.File.CopyTo(fs);
                     fs.Close();
 
+                    /* Get duration of music */
                     Mp3FileReader reader = new Mp3FileReader(filePath);
                     music.Duration = (int)Math.Round(reader.TotalTime.TotalSeconds);
                     reader.Close();
 
+                    /* Add music to database */
                     contextMusic.Musics.Add(music);
                     contextMusic.SaveChanges();
 
