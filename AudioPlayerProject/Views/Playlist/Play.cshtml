@@ -18,7 +18,7 @@
 <div class="my-4" id="waveform"></div>
 
 <div class="d-flex justify-content-center">
-    <button type="button" class="btn btn-primary" id="loop"><i class="fas fa-arrow-right"></i></button>
+    <button type="button" class="btn btn-secondary" id="loop"><i class="fas fa-repeat"></i></button>
     <div class="btn-group mx-4" role="group">
         <button type="button" class="btn btn-primary" id="previous"><i class="fas fa-step-backward"></i></button>
         <button type="button" class="btn btn-primary" id="playPause"><i class="fas fa-play"></i></button>
@@ -170,12 +170,12 @@
         document.querySelector('#loop').addEventListener('click', function () {
             loop = !loop;
             if (loop) {
-                document.querySelector('#loop').querySelector('i').classList.remove('fa-arrow-right');
-                document.querySelector('#loop').querySelector('i').classList.add('fa-repeat');
+                document.querySelector('#loop').classList.remove('btn-secondary');
+                document.querySelector('#loop').classList.add('btn-primary');
             }
             else {
-                document.querySelector('#loop').querySelector('i').classList.remove('fa-repeat');
-                document.querySelector('#loop').querySelector('i').classList.add('fa-arrow-right');
+                document.querySelector('#loop').classList.remove('btn-primary');
+                document.querySelector('#loop').classList.add('btn-secondary');
             }
         })
 
