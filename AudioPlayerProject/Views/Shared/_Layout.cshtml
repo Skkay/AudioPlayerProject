@@ -4,13 +4,29 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - AudioPlayerProject</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @if (Context.Request.Cookies["darkMode"] == "yes")
+    {
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-dark.min.css" />
+    }
+    else
+    {
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    }
     <link rel="stylesheet" type="text/css" href="~/css/fontawesome.all.min.css">
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3
+        @if (Context.Request.Cookies["darkMode"] == "yes")
+        {
+            @:navbar-dark bg-dark
+        }
+        else
+        {
+            @:navbar-light bg-white
+        }
+        ">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AudioPlayerProject</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -32,6 +48,16 @@
                     <partial name="_LoginPartial.cshtml" />
                 </div>
             </div>
+            <a class="nav-link" asp-area="" asp-controller="CssMode" asp-action="ToggleCSS">
+                @if (Context.Request.Cookies["darkMode"] == "yes")
+                {
+                    <i class="fad fa-sun"></i>
+                }
+                else
+                {
+                    <i class="fas fa-moon"></i>
+                }
+            </a>
         </nav>
     </header>
     <div class="container">
