@@ -168,6 +168,12 @@ namespace AudioPlayerProject.Controllers
         public IActionResult Play(int id)
         {
             Playlist playlist = context.Playlists.Find(id);
+            if (playlist == null)
+            {
+                TempData["ConfirmationResult"] = new string[] { "danger", "La playlist est introuvable." };
+                return RedirectToAction("Index");
+            }
+
             List<int> musicIds = context.PlaylistMusics.Where(p => p.PlaylistId == id).Select(p => p.MusicId).ToList();
             List<Music> musics = context.Musics.Where(m => musicIds.Contains(m.Id)).ToList();
 

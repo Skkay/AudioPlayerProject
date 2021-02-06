@@ -80,6 +80,12 @@ namespace AudioPlayerProject.Controllers
         public IActionResult Play(int id)
         {
             Music music = contextMusic.Musics.Find(id);
+            if (music == null)
+            {
+                TempData["ConfirmationResult"] = new string[] { "danger", "La musique est introuvable." };
+                return RedirectToAction("Index");
+            }
+
             ViewBag.Music = music;
             ViewBag.BaseUploadsPath = this.uploadsFolderName;
             return View();
